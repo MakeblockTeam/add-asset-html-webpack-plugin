@@ -111,10 +111,12 @@ export default class AddAssetHtmlPlugin {
     );
 
     let suffix = '';
-    if (hash) {
+    if (hash === true) {
       const md5 = crypto.createHash('md5');
       md5.update(compilation.assets[addedFilename].source());
       suffix = `?${md5.digest('hex').substr(0, 20)}`;
+    } else if (typeof hash === 'string') {
+      suffix = hash;
     }
 
     const resolvedPublicPath =
